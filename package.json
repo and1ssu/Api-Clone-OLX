@@ -1,0 +1,18 @@
+{
+  "name": "aplicacao-node",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://andersspn@bitbucket.org/andersspn/aplicacao-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/andersspn/aplicacao-node#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}
