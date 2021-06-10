@@ -2,4 +2,10 @@
 
 <h1>teste</h1>
 
-<p> Nome {{userInfo.name}}</p>
+
+
+{{#posts}}
+    <h3>{{title}}</h3>
+    <p>{{body}}</p>
+<hr/>
+{{/posts}}
