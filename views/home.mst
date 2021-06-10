@@ -2,4 +2,4 @@
 
 <h1>teste</h1>
 
-<p> Nome</p>
+<p> Nome {{userInfo.name}}</p>

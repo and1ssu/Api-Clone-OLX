@@ -2,6 +2,7 @@ const express = require('express');
 const mustache = require('mustache-express');
 const router = require('./routes/index');
 const helpers = require('./helpers');
+const errorHandler = require('./handlers/errorHandler');
 
 
 
@@ -13,9 +14,11 @@ app.use((req, res, next)=>{
     next();
 });
 
-app.use('/', router)
 app.use(express.json());
-console.log(__dirname)
+app.use('/', router);
+app.use(errorHandler.notFound); 
+
+
 
 app.engine('mst', mustache(__dirname+'/views/partials', '.mst'));
 app.set('view engine', 'mst');
