@@ -15,6 +15,9 @@ app.use((req, res, next)=>{
 });
 
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+
 app.use('/', router);
 app.use(errorHandler.notFound); 
 
