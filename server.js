@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 require('dotenv').config({path:'variables.env'})
 
 //Conexão MongoDB
-mongoose.connect(process.env.DATABASE, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE, {
+     useUnifiedTopology: true, 
+     useNewUrlParser: true,
+     useFindAndModify: false
+    });
 mongoose.Promise = global.Promise;
 mongoose.connection.on('errro', (error) => {
     console.log("ERRO:" + error.mensage);
