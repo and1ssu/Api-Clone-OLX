@@ -1,17 +1,32 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<h1> MENU</h1>
-<hr/>
-<ul>
-    {{#h.menu}}
-    <li><a href="{{slug}}">{{name}}</a></li>
-    {{/h.menu}}
-</ul>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<hr/>
+    <link rel='stylesheet' href="/assets/css/templates.css" />
+    <title>{{pageTitle}} {{h.defaultPageTitle}}</title>
+</head>
 
-{{#flashes}}
+<body>
+    <header>
+    <h1>TESTE</h1>
+        <ul>
+            {{#h.menu}}
+            <li><a href="{{slug}}">{{name}}</a></li>
+            {{/h.menu}}
+        </ul>
+    </header>
+
+    <hr />
+
+    {{#flashes}}
     {{#success}}
-        <div>{{.}}</div>
+    <div>{{.}}</div>
     {{/success}}
-{{/flashes}}
+    {{/flashes}}
+</body>
+
+</html>
