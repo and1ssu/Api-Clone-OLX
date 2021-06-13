@@ -4,23 +4,30 @@ const slug = require('slug');
 mongoose.Promise = global.Promise;
 
 const postSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        trim: true,
-        required: 'O post precisa de um titulo'
+    photo:String,
+    title:{
+        type:String,
+        trim:true,
+        required:'O post precisa de um titulo'
     },
-    slug: String,
-    body: {
-        type: String,
-        trim: true
+    slug:String,
+    body:{
+        type:String,
+        trim:true
     },
-    tags: [String]
+    tags:[String]
 });
 
-postSchema.pre('save', function(next) {
-    if (this.isModified('title')) {
-        this.slug = slug(this.title);
+postSchema.pre('save', async function(next) {
+    if(this.isModified('title')) {
+        this.slug = slug( this.title, {lower:true} );
 
+        const slugRegex = new RegExp(`^(${this.slug})((-[0-9]{1,}$)?)$`, 'i');
+        const postsWithSlug = await this.constructor.find({slug:slugRegex});
+
+        if(postsWithSlug.length > 0) {
+            this.slug = `${this.slug}-${postsWithSlug.length + 1}`;
+        }
     }
 
     next();

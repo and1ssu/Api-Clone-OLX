@@ -1,64 +1,55 @@
 const mongoose = require('mongoose');
-const { post } = require('../app');
-const Post = mongoose.model('Post')
+const slug = require('slug');
+const Post = mongoose.model('Post');
 
-
-exports.view = async (req, res) =>{
-    const post = await Post.findOne({ slug: req.params.slug });    
+exports.view = async (req, res) => {
+    const post = await Post.findOne({ slug:req.params.slug });
     res.render('view', { post });
-
 };
 
 exports.add = (req, res) => {
     res.render('postAdd');
-}
+};
 
 exports.addAction = async (req, res) => {
-    req.body.tags = req.body.tags.split(',').map(t=>t.trin());
+    req.body.tags = req.body.tags.split(',').map(t=>t.trim());
     const post = new Post(req.body);
 
     try {
         await post.save();
-    } catch (error) {
-        req.flash('error', 'Erro:' + error.message);
+    } catch(error) {
+        req.flash('error', 'Ocorreu um erro! Tente novamente mais tarde');
         return res.redirect('/post/add');
     }
 
-
-    req.flash('success', 'Post salvo com sucesso');
-
+    req.flash('success', 'Post salvo com sucesso!');
     res.redirect('/');
-
 };
 
 exports.edit = async (req, res) => {
-    //1. PEgar as informações  do post em questão
-    const post = await Post.findOne({ slug: req.params.slug });
-    //2. Carregar o formulário de edição
+    const post = await Post.findOne({ slug:req.params.slug });
     res.render('postEdit', { post });
 };
 
 exports.editAction = async (req, res) => {
-    req.body.tags = req.body.tags.split(',').map(t=>t.trin());
-
-    req.body.slug = require('slug')(req.body.title, { lowe: true }); 
-
+    req.body.slug = slug(req.body.title, {lower:true});
+    req.body.tags = req.body.tags.split(',').map(t=>t.trim());
+    
     try {
-        //Procurar o item enviado 
         const post = await Post.findOneAndUpdate(
-            { slug: req.params.slug },
+            { slug:req.params.slug },
             req.body,
             {
-                new: true, //Retonar novo item atualizado 
-                runValidators: true
+                new:true, // Retornar NOVO item atualizado
+                runValidators:true
             }
         );
-    } catch {
-        req.flash('error', 'Erro:' + error.message);
+    } catch(error) {
+        req.flash('error', 'Ocorreu um erro! Tente novamente mais tarde');
         return res.redirect('/post/'+req.params.slug+'/edit');
-    }
-    req.flash('success', 'Post atualizado com sucesso ');
+    };
 
-    // Redirecionar para home
+    req.flash('success', 'Post atualizado com sucesso!');
+
     res.redirect('/');
 };
