@@ -12,7 +12,10 @@
         <img src="/media/{{photo}}" />
         {{/photo}}
         <h3><a href="/post/{{slug}}">{{title}}</a></h3>
+        <small>Autor: {{author.name}}</small>
         <p>{{body}}</p>
+        {{#canEdit}}
         <a href="/post/{{slug}}/edit">[ editar ]</a>
+        {{/canEdit}}
     </div>
 {{/posts}}

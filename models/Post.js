@@ -3,6 +3,8 @@ const slug = require('slug');
 
 mongoose.Promise = global.Promise;
 
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 const postSchema = new mongoose.Schema({
     photo:String,
     title:{
@@ -15,7 +17,11 @@ const postSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-    tags:[String]
+    tags:[String],
+    author:{
+        type:ObjectId,
+        ref:'User'
+    }
 });
 
 postSchema.pre('save', async function(next) {
@@ -40,5 +46,10 @@ postSchema.statics.getTagsList = function() {
         { $sort:{ count:-1 } }
     ]);
 }
+
+
+
+
+
 
 module.exports = mongoose.model('Post', postSchema);
