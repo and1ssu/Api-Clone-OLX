@@ -33,4 +33,12 @@ postSchema.pre('save', async function(next) {
     next();
 });
 
+postSchema.statics.getTagsList = function() {
+    return this.aggregate([
+        { $unwind:'$tags' },
+        { $group:{ _id:'$tags', count:{ $sum:1 } } },
+        { $sort:{ count:-1 } }
+    ]);
+}
+
 module.exports = mongoose.model('Post', postSchema);

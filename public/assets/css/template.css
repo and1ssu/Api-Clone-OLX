@@ -76,3 +76,16 @@ input[type=submit]:hover {
     background-color:#EFEFEF;
     cursor:pointer;
 }
+
+.tags {
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    margin-top:10px;
+}
+.tags .tag {
+    padding:10px;
+}
+.tag.selected a {
+    color:#FF0000;
+}
